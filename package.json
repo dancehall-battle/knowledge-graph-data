@@ -1,0 +1,24 @@
+{
+  "name": "@dancehall-battle/knowledge-graph-data",
+  "version": "0.0.1",
+  "description": "Download the data to generate the knowledge graph.",
+  "main": "downloaddata.js",
+  "dependencies": {
+    "csv-writer": "^1.4.0",
+    "fs-extra": "^8.1.0",
+    "google-spreadsheet": "^2.0.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dancehall-battle/knowledge-graph-data.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dancehall-battle/knowledge-graph-data/issues"
+  },
+  "homepage": "https://github.com/dancehall-battle/knowledge-graph-data#readme"
+}

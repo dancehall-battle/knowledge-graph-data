@@ -1,0 +1,9 @@
+*.jar
+*.ttl
+.idea
+*.csv
+node_modules
+playground
+.DS_Store
+files
+sheet-id.txt
