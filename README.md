@@ -15,4 +15,4 @@ as CSV files in the folder `files`.
 
 ## License
 
-MIT &copy; Dancehallbattle.org
+MIT &copy; Dancehall Battle
