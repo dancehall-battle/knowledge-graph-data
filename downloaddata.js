@@ -8,7 +8,7 @@ if (process.argv.length !== 3) {
 }
 
 const doc = new GoogleSpreadsheet(process.argv[2]);
-const wantedSheetTitles = ['events', 'organizers', 'battles', 'battle_winner', 'winners'];
+const wantedSheetTitles = ['events', 'organizers', 'battles', 'battle_winner', 'people'];
 
 // Make sure the directory 'files' exists.
 fs.ensureDirSync('./files');

@@ -1,7 +1,7 @@
 # Download data for knowledge graph
 
 ## Requirements
-- Node js
+- Node.js
 - yarn
 
 ## Install
