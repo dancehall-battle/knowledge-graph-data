@@ -1,58 +1,49 @@
-const GoogleSpreadsheet = require('google-spreadsheet');
+const {GoogleSpreadsheet} = require('google-spreadsheet');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const fs = require('fs-extra');
 
-if (process.argv.length !== 3) {
-  console.error('Please provide the id of the Google Sheets.');
-  process.exit(1);
-}
+main();
 
-const doc = new GoogleSpreadsheet(process.argv[2]);
-const wantedSheetTitles = ['events', 'organizers', 'battles', 'battle_winner', 'people'];
+async function main() {
+  if (process.argv.length !== 3) {
+    console.error('Please provide path to config file.');
+    process.exit(1);
+  }
 
-// Make sure the directory 'files' exists.
-fs.ensureDirSync('./files');
+  const config = await fs.readJSON(process.argv[2]);
 
-doc.getInfo((err, info) => {
-  info.worksheets.forEach(sheet => {
+  const doc = new GoogleSpreadsheet(config.sheetId);
+  doc.useApiKey(config.googleApiKey);
+  await doc.loadInfo();
+  const wantedSheetTitles = ['events', 'organizers', 'battles', 'battle_winner', 'people'];
+
+  // Make sure the directory 'files' exists
+  await fs.ensureDir('./files');
+
+  doc.sheetsByIndex.forEach(sheet => {
     if (wantedSheetTitles.indexOf(sheet.title) !== -1) {
       downloadSheetAsCSV(sheet);
     }
   });
-});
-
-async function downloadSheetAsCSV(sheet) {
-  return new Promise(async (resolve, reject) => {
-    const header = await getHeaders(sheet);
-
-    const csvWriter = createCsvWriter({
-      path: `./files/${sheet.title}.csv`,
-      header
-    });
-
-    sheet.getRows(async (err, rows) => {
-      if (err) {
-        reject(err);
-      } else {
-        await csvWriter.writeRecords(rows);
-        resolve();
-      }
-    });
-  });
 }
 
-function getHeaders(sheet) {
-  return new Promise((resolve, reject) => {
-    sheet.getRows({offset: 0, limit: 1}, (err, rows) => {
-      if (err) {
-        reject(err);
-      } else {
-        const row = rows[0];
-        resolve(Object.keys(row)
-          .filter(key => (!key.startsWith('_') && key !== 'save' && key !== 'del' ))
-          .map(header => { return {id: header, title: header}})
-        );
-      }
-    });
+async function downloadSheetAsCSV(sheet) {
+  const header = await getHeaders(sheet);
+
+  const csvWriter = createCsvWriter({
+    path: `./files/${sheet.title}.csv`,
+    header
   });
+
+  const rows = await sheet.getRows();
+  await csvWriter.writeRecords(rows);
+}
+
+async function getHeaders(sheet) {
+  const rows = await sheet.getRows({offset: 0, limit: 1});
+
+  const row = rows[0];
+  return Object.keys(row)
+    .filter(key => (!key.startsWith('_') && key !== 'save' && key !== 'del' ))
+    .map(header => { return {id: header, title: header}});
 }
