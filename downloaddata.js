@@ -15,7 +15,7 @@ async function main() {
   const doc = new GoogleSpreadsheet(config.sheetId);
   doc.useApiKey(config.googleApiKey);
   await doc.loadInfo();
-  const wantedSheetTitles = ['events', 'organizers', 'battles', 'battle_winner', 'people'];
+  const wantedSheetTitles = ['events', 'organizers', 'battles', 'battle_winner', 'people', 'battle_judge'];
 
   // Make sure the directory 'files' exists
   await fs.ensureDir('./files');
