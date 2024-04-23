@@ -1,11 +1,11 @@
 {
   "name": "@dancehall-battle/knowledge-graph-data",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Download the data to generate the knowledge graph.",
-  "main": "downloaddata.js",
+  "main": "download-data.js",
   "dependencies": {
-    "csv-writer": "^1.4.0",
-    "fs-extra": "^8.1.0",
+    "csv-writer": "^1.6.0",
+    "fs-extra": "^11.2.0",
     "google-spreadsheet": "^3.1.15"
   },
   "scripts": {
