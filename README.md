@@ -9,9 +9,14 @@ Install dependencies via `yarn install`.
 
 ## Usage
 
-Execute `node downloaddata.js [sheet-id]` 
-to download the Google Sheets with id `sheet-id` 
+Execute `node download-data.js [path-to-config-file]` 
+to download the Google Sheets
 as CSV files in the folder `files`.
+
+The config file is a JSON file with the following attributes:
+
+- `googleApiKey`
+- `sheetId`
 
 ## License
 

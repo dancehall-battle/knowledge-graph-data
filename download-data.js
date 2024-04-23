@@ -6,7 +6,7 @@ main();
 
 async function main() {
   if (process.argv.length !== 3) {
-    console.error('Please provide path to config file.');
+    console.error('Please provide the path to a config file.');
     process.exit(1);
   }
 
