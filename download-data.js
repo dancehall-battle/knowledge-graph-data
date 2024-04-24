@@ -33,6 +33,38 @@ async function main() {
           if (!row.gender) {
             row.gender = 'all'
           }
+
+          if (!row.inviteonly) {
+            row.inviteonly = 'no'
+          }
+
+          if (!row.customlabel) {
+            row.customlabel = '(null)'
+          }
+        };
+      }
+
+      if (sheet.title === 'events') {
+        rowUpdate = (row) => {
+          if (!row.instagram) {
+            row.instagram = '(null)'
+          }
+
+          if (!row.city) {
+            row.city = '(null)'
+          }
+        };
+      }
+
+      if (sheet.title === 'people') {
+        rowUpdate = (row) => {
+          if (!row.instagram) {
+            row.instagram = '(null)'
+          }
+
+          if (!row.country) {
+            row.country = '(null)'
+          }
         };
       }
 
