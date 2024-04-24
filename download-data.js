@@ -22,12 +22,26 @@ async function main() {
 
   doc.sheetsByIndex.forEach(sheet => {
     if (wantedSheetTitles.indexOf(sheet.title) !== -1) {
-      downloadSheetAsCSV(sheet);
+      let rowUpdate;
+
+      if (sheet.title === 'battles') {
+        rowUpdate = (row) => {
+          if (!row.age) {
+            row.age = 'all'
+          }
+
+          if (!row.gender) {
+            row.gender = 'all'
+          }
+        };
+      }
+
+      downloadSheetAsCSV(sheet, rowUpdate);
     }
   });
 }
 
-async function downloadSheetAsCSV(sheet) {
+async function downloadSheetAsCSV(sheet, rowUpdate) {
   const header = await getHeaders(sheet);
 
   const csvWriter = createCsvWriter({
@@ -36,6 +50,13 @@ async function downloadSheetAsCSV(sheet) {
   });
 
   const rows = await sheet.getRows();
+
+  if (rowUpdate) {
+    rows.forEach(row => {
+      rowUpdate(row);
+    });
+  }
+
   await csvWriter.writeRecords(rows);
 }
 
